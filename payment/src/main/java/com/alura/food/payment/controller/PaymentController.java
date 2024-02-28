@@ -3,6 +3,7 @@ package com.alura.food.payment.controller;
 
 import com.alura.food.payment.dto.PaymentDto;
 import com.alura.food.payment.service.PaymentService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,15 +17,15 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping("api/v1/payments")
+@RequestMapping("/api/v1/payments")
 public class PaymentController {
 
     @Autowired
     private PaymentService paymentService;
 
     @GetMapping
-    public Page<PaymentDto> list(@PageableDefault(size = 10) Pageable pagination) {
-        return paymentService.getAll(pagination);
+    public ResponseEntity<Page<PaymentDto>> list(@PageableDefault(size = 10) Pageable pagination) {
+        return ResponseEntity.ok(paymentService.getAll(pagination));
     }
 
     @GetMapping("/{id}")
@@ -34,6 +35,7 @@ public class PaymentController {
     }
 
     @PostMapping
+    @Transactional
     public ResponseEntity<PaymentDto> register(@RequestBody @Valid PaymentDto paymentDto, UriComponentsBuilder uriBuilder) {
         PaymentDto paymentDtoPost = paymentService.createPayment(paymentDto);
         URI address = uriBuilder.path("/payments/{id}").buildAndExpand(paymentDtoPost.id()).toUri();
@@ -42,12 +44,14 @@ public class PaymentController {
     }
 
     @PutMapping
+    @Transactional
     public ResponseEntity<PaymentDto> update(@PathVariable @NotNull Long id, @RequestBody @Valid PaymentDto paymentDto) {
         PaymentDto paymentDtoPut = paymentService.updatePayment(id, paymentDto);
         return ResponseEntity.ok(paymentDtoPut);
     }
 
     @DeleteMapping("/{id}")
+    @Transactional
     public ResponseEntity<PaymentDto> delete(@PathVariable @NotNull Long id) {
         paymentService.deletePayment(id);
         return ResponseEntity.noContent().build();

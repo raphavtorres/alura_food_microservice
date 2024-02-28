@@ -1,11 +1,11 @@
 server:
-  port: 0
+  port: 8000
   error:
     include-stacktrace: never
 
 spring:
   datasource:
-    url: jdbc:postgresql://127.0.0.1:5432/payment_db
+    url: jdbc:postgresql://127.0.0.1:5432/order_bd
     username: postgres
     password: 123
   jpa:
@@ -16,7 +16,7 @@ spring:
       hibernate:
         format_sql: true
   application:
-    name: payment-ms
+    name: order-ms
 
 eureka:
   client:
