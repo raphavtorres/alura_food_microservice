@@ -13,6 +13,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("update Order o set o.status = :status where o = :order")
     void updateStatus(Status status, Order order);
 
-    @Query(value = "SELECT o from Order o LEFT JOIN FETCH o.itens where o.id = :id")
+    @Query(value = "SELECT o from Order o LEFT JOIN FETCH o.items where o.id = :id")
     Order byIdWithItems(Long id);
 }

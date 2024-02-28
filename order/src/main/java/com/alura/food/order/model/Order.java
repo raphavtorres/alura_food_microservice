@@ -32,7 +32,7 @@ public class Order {
     private Status status;
 
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "order")
-    private List<OrderItem> itens = new ArrayList<>();
+    private List<OrderItem> items = new ArrayList<>();
 
     public Order(OrderDto dto) {
         this.id = dto.id();

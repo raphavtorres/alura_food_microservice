@@ -17,7 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/api/v1/orders")
+@RequestMapping("/orders")
 public class OrderController {
 
     @Autowired

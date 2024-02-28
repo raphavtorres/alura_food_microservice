@@ -33,7 +33,7 @@ public class OrderService {
 
         order.setDateTime(LocalDateTime.now());
         order.setStatus(Status.DONE);
-        order.getItens().forEach(item -> item.setOrder(order));
+        order.getItems().forEach(item -> item.setOrder(order));
 
         Order savedOrder = orderRepository.save(order);
 
