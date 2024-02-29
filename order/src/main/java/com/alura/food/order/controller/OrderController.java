@@ -2,12 +2,12 @@ package com.alura.food.order.controller;
 
 import com.alura.food.order.dto.OrderDto;
 import com.alura.food.order.dto.StatusDto;
-import com.alura.food.order.model.Order;
 import com.alura.food.order.service.OrderService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -58,4 +58,10 @@ public class OrderController {
 
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/port")
+    public String returnsPort(@Value("${local.server.port}") String port) {
+        return String.format("Request answered by instance executing on port %s", port);
+    }
+
 }
