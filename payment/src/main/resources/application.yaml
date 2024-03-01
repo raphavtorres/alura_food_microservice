@@ -7,7 +7,7 @@ spring:
   datasource:
     url: jdbc:postgresql://127.0.0.1:5432/payment_db
     username: postgres
-    password: root
+    password: 123
   jpa:
     hibernate:
       ddl-auto: update
@@ -22,3 +22,11 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8081/eureka
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      updateOrder:
+        slidingWindowSize: 3
+        minimumNumberOfCalls: 2
+        waitDurationInOpenState: 50s

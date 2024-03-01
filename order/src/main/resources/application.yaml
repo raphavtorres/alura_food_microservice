@@ -5,9 +5,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://127.0.0.1:5432/order_bd
+    url: jdbc:postgresql://127.0.0.1:5432/order_db
     username: postgres
-    password: root
+    password: 123
   jpa:
     hibernate:
       ddl-auto: update

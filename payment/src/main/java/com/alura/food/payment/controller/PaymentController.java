@@ -3,6 +3,7 @@ package com.alura.food.payment.controller;
 
 import com.alura.food.payment.dto.PaymentDto;
 import com.alura.food.payment.service.PaymentService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -57,4 +58,13 @@ public class PaymentController {
         return ResponseEntity.noContent().build();
     }
 
+    @PatchMapping("/{id}/confirm")
+    @CircuitBreaker(name = "updateOrder", fallbackMethod = "authorizedPaymentWithPendingPayment")
+    public void confirmPayment(@PathVariable @NotNull Long id) {
+        paymentService.confirmPayment(id);
+    }
+
+    public void authorizedPaymentWithPendingPayment(Long id, Exception e) {
+        paymentService.alterStatus(id);
+    }
 }
